@@ -51,4 +51,4 @@ export const uploadVideo = (userId, formData) => api.post(`/uploadVideo/${userId
         'Content-Type': 'multipart/form-data',
     },
 });
-export const getVideos = (userId) => api.get(`/getVideos/${userId || ''}`);
+export const getVideos = (userName) => api.get(`/getVideos/${userName || ''}`);

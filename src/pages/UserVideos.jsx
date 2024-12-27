@@ -3,7 +3,7 @@ import { getVideos } from '../api/api';
 import { useParams, useNavigate } from 'react-router-dom';
 
 export default function UserVideos() {
-    const { userId } = useParams();
+    const { userName } = useParams();
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedVideo, setSelectedVideo] = useState(null);
@@ -13,7 +13,9 @@ export default function UserVideos() {
     const fetchVideos = useCallback(async () => {
         try {
             setLoading(true);
-            const { data } = await getVideos(userId);
+            console.log("🚀 ~ fetchVideos ~ userName:", userName)
+            const { data } = await getVideos(userName);
+            console.log("🚀 ~ fetchVideos ~ data:", data)
             if (data.data && data.data.length > 0) {
                 setVideos(data.data);
                 setUserDetails(data.data[0].user);
@@ -24,7 +26,7 @@ export default function UserVideos() {
         } finally {
             setLoading(false);
         }
-    }, [userId]);
+    }, [userName]);
 
     useEffect(() => {
         fetchVideos();

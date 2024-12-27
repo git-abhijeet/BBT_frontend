@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function Signup() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const initialFormData = {
         firstName: '',
         lastName: '',
@@ -19,15 +20,17 @@ export default function Signup() {
 
     const handleSignup = async () => {
         try {
+            setLoading(true);
             const response = await signupUser(formData);
             console.log("🚀 ~ handleSignup ~ response:", response);
             alert('Signup successful. Check your email for password.');
             navigate('/login');
         } catch (err) {
             console.log("🚀 ~ handleSignup ~ err asdasd:", err)
-            // console.error(err);
             alert(err.response.data.message);
-            setFormData(initialFormData); // Reset form data
+            setFormData(initialFormData);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -43,10 +46,24 @@ export default function Signup() {
                         value={formData[key]}
                         onChange={handleChange}
                         className="block w-full border border-gray-300 p-2 mb-4 rounded"
+                        disabled={loading}
                     />
                 ))}
-                <button onClick={handleSignup} className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200">
-                    Signup
+                <button
+                    onClick={handleSignup}
+                    disabled={loading}
+                    className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200 relative"
+                >
+                    {loading ? (
+                        <>
+                            <span className="opacity-0">Signup</span>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        </>
+                    ) : (
+                        'Signup'
+                    )}
                 </button>
                 <p className="mt-4 text-center">
                     Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Login here</Link>

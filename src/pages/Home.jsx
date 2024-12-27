@@ -98,8 +98,8 @@ export default function Home() {
             }
             setBioPopup(false);
         } catch (err) {
-            console.error(err);
-            alert('Failed to save bio');
+            console.log("🚀 ~ saveBio ~ err:", err)
+            alert(err.response.data.message);
         } finally {
             setIsSavingBio(false);
         }
@@ -154,8 +154,8 @@ export default function Home() {
                 <button onClick={handleLogout} className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">
                     Logout
                 </button>
-                <div className="flex items-center mb-6">
-                    <div className="relative">
+                <div className="flex items-start mb-6">
+                    <div className="relative flex-shrink-0">
                         <img
                             src={user.imgUrl || 'https://dummyimage.com/150x150/000/fff&text=Dummy+User'}
                             alt="Profile"
@@ -206,8 +206,10 @@ export default function Home() {
                             <div className="mt-4">
                                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Bio</h3>
                                 {user.bio && user.bio.trim() ? (
-                                    <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-                                        <p className="text-gray-700 whitespace-pre-wrap">{user.bio}</p>
+                                    <div className="bg-gray-50 p-4 rounded-lg shadow-sm max-w-full"> {/* Added max-w-full */}
+                                        <p className="text-gray-700 whitespace-pre-wrap break-words"> {/* Added break-words */}
+                                            {user.bio}
+                                        </p>
                                         <button
                                             onClick={() => setBioPopup(true)}
                                             className="mt-2 text-blue-500 hover:text-blue-600 text-sm font-medium"
