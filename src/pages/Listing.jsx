@@ -96,7 +96,7 @@ export default function Listing() {
                                     </div>
                                 </div>
                                 <button
-                                    onClick={() => navigate(`/user-videos/${group.user._id}`)}
+                                    onClick={() => navigate(`/user-videos/${group.user.userName}`)}
                                     className="text-blue-600 hover:text-blue-800"
                                 >
                                     View All

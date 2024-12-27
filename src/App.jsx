@@ -34,7 +34,7 @@ function App() {
           }
         />
         <Route
-          path="/user-videos/:userId"
+          path="/user-videos/:userName"
           element={
             <PrivateRoute>
               <UserVideos />
