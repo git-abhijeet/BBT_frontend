@@ -16,17 +16,19 @@ export default function Listing() {
         try {
             setLoading(true);
             const { data } = await getVideos();
+            console.log("🚀 ~ fetchAll ~ data:", data)
 
-            // Group videos by user
             const videosByUser = {};
             data.data.forEach(video => {
-                if (!videosByUser[video.user._id]) {
-                    videosByUser[video.user._id] = {
-                        user: video.user,
-                        videos: []
-                    };
+                if (video.user && video.user._id) {
+                    if (!videosByUser[video.user._id]) {
+                        videosByUser[video.user._id] = {
+                            user: video.user,
+                            videos: []
+                        };
+                    }
+                    videosByUser[video.user._id].videos.push(video);
                 }
-                videosByUser[video.user._id].videos.push(video);
             });
 
             setGroupedVideos(Object.values(videosByUser));
