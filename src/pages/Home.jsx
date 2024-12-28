@@ -121,6 +121,11 @@ export default function Home() {
     };
 
     const uploadNewVideo = async () => {
+        if (!vidFile || vidFile.type !== 'video/mp4') {
+            alert('Please select a valid MP4 video file');
+            return;
+        }
+
         try {
             setUploading(true);
             const formData = new FormData();
@@ -352,15 +357,23 @@ export default function Home() {
                                                     type="file"
                                                     className="sr-only"
                                                     onChange={(e) => {
-                                                        setVidFile(e.target.files[0]);
-                                                        e.target.value = ''; // Reset file input after selection
+                                                        const file = e.target.files[0];
+                                                        if (file) {
+                                                            if (file.type === 'video/mp4') {
+                                                                setVidFile(file);
+                                                                e.target.value = ''; // Reset file input after selection
+                                                            } else {
+                                                                alert('Please select an MP4 video file only');
+                                                                e.target.value = ''; // Clear invalid selection
+                                                            }
+                                                        }
                                                     }}
-                                                    accept="video/*"
+                                                    accept="video/mp4" // Restrict file picker to MP4 files
                                                 />
                                             </label>
                                             <p className="pl-1">or drag and drop</p>
                                         </div>
-                                        <p className="text-xs text-gray-500">MP4, WebM up to 6MB</p>
+                                        <p className="text-xs text-gray-500">MP4 files only, up to 6MB</p>
                                     </div>
                                 </div>
                                 {vidFile && (
