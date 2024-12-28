@@ -23,7 +23,7 @@ export default function Home() {
                 const parsedUser = JSON.parse(storedUser);
                 console.log("🚀 ~ useEffect ~ parsedUser:", parsedUser)
                 setUser(parsedUser);
-                fetchVideos(parsedUser._id);
+                fetchVideos(parsedUser.userName);
             } catch (error) {
                 console.error("Error parsing user data from sessionStorage:", error);
             }
@@ -130,7 +130,7 @@ export default function Home() {
             await uploadVideo(user._id, formData);
             alert('Video uploaded successfully');
             handleCloseVideoPopup();
-            fetchVideos(user._id);
+            fetchVideos(user.userName);
         } catch (err) {
             console.log("🚀 ~ uploadNewVideo ~ err:", err);
             console.error(err);
